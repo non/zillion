@@ -12,19 +12,27 @@ numbers above -10^3003 and below 10^3003.
 import zillion.{cardinal, ordinal}
 
 cardinal(3)     // "three"
+cardinal(101)   // "one hundred one"
 cardinal(13579) // "thirteen thousand five hundred seventy-nine"
 cardinal(-12)   // "negative twelve"
 
 ordinal(0)      // "one hundred sixteenth"
+ordinal(20)     // "twentieth"
+ordinal(117)    // "one hundred seventeenth"
 ordinal(9999)   // "nine thousand nine hundred ninety-ninth"
 
 cardinal(BigInt(10).pow(123) + BigInt(10).pow(37) + BigInt(1234))
 // "one quadragintallion ten undecillion one thousand two hundred thirty-four"
+
+cardinal(BigInt(10).pow(300) * 999)
+// "nine hundred ninety-nine novenonagintallion"
 ```
 
 ### Details
 
-The [strategy](http://en.wikipedia.org/wiki/Names_of_large_numbers#Proposals_for_new_naming_system) for naming large numbers comes from John Horton Conway and Richard K. Guy by way of Wikipedia.
+The [strategy](http://en.wikipedia.org/wiki/Names_of_large_numbers#Proposals_for_new_naming_system)
+for naming large numbers comes from John Horton Conway and Richard
+K. Guy by way of Wikipedia.
 
 This library has not yet been extensively tested or reviewed. I'm not
 sure what the best strategy is for unit-testing the very large number

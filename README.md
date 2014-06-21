@@ -3,7 +3,7 @@
 ### Overview
 
 Zillion is a simple Scala package for producing English names for
-numbers. Its goal is to be simple and easy-to-use.
+numbers.
 
 Zillion can currently produce cardinal or ordinal names for all
 numbers above -10^3003 and below 10^3003.

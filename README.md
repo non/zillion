@@ -16,7 +16,7 @@ cardinal(101)   // "one hundred one"
 cardinal(13579) // "thirteen thousand five hundred seventy-nine"
 cardinal(-12)   // "negative twelve"
 
-ordinal(0)      // "one hundred sixteenth"
+ordinal(0)      // "zeroth"
 ordinal(20)     // "twentieth"
 ordinal(117)    // "one hundred seventeenth"
 ordinal(9999)   // "nine thousand nine hundred ninety-ninth"

@@ -3,10 +3,10 @@
 ### Overview
 
 Zillion is a simple Scala package for producing English names for
-numbers.
+numbers. Its goal is to be simple and easy-to-use.
 
 Zillion can currently produce cardinal or ordinal names for all
-numbers between -(10^3003) and (10^3003).
+numbers above -10^3003 and below 10^3003.
 
 ```scala
 import zillion.{cardinal, ordinal}
@@ -32,6 +32,15 @@ names. (Of course, there are not any tests at all yet, so clearly
 there is obvious room to improve.)
 
 ### Future Work
+
+Right now the `cardinal` and `ordinal` methods take a `BigInt`
+argument (but implicit conversions mean that you can call this method
+with `Int` or `Long` too). It might be worth trying to support other
+number types directly.
+
+It could also be nice to allow pluggable capitalization and grammar
+rules. Currently all names are lowercase, and no conjunctions are
+used.
 
 Zillion only supports English. I'm not sure how useful this code would
 be to rendering number names in other languages. But I'd love to hear

@@ -146,6 +146,8 @@ package object zillion {
 
   /**
    * Return the floor of log10(n).
+   * 
+   * We assume n is non-negative.
    */
   private[zillion] def log10(n: BigInt): Int = {
     // get a lower bound approximation for log10(n)
@@ -157,6 +159,8 @@ package object zillion {
 
   /**
    * Return the largest multiple of 3 <= log10(n).
+   * 
+   * We assume n is non-negative.
    */
   private[zillion] def log10Mult3(n: BigInt): Int = {
     val m = log10(n)

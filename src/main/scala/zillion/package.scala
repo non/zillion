@@ -1,3 +1,5 @@
+import spire.math.Rational
+
 package object zillion {
 
   /**
@@ -39,7 +41,7 @@ package object zillion {
    * 
    * [1] http://en.wikipedia.org/wiki/Names_of_large_numbers#Proposals_for_new_naming_system
    */
-  private[zillion] def render(n: BigInt, mode: Mode): String =
+  private[zillion] def render(n: BigInt, mode: NameMode): String =
     if (n < 0) {
       "negative " + render(-n, mode)
     } else if (n < 10) {
@@ -80,7 +82,7 @@ package object zillion {
       throw new IllegalArgumentException(s"number is >= 10^3003")
     }
 
-  val thousands = Array("", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion")
+  val thousands = Vector("", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion")
 
   /**
    * This method is used to create the large units between 10^33
@@ -174,29 +176,81 @@ package object zillion {
    * (whose cardinal => ordinal mappings are non-standard). It also
    * has a suffix() method which deals with all "larger" mappings.
    */
-  private[zillion] sealed trait Mode {
-    def ones: Array[String]
-    def teens: Array[String]
-    def tens: Array[String]
+  private[zillion] sealed trait NameMode {
+    def ones: Vector[String]
+    def teens: Vector[String]
+    def tens: Vector[String]
     def suffix(s: String): String
   }
 
-  private[zillion] case object Cardinal extends Mode {
-    val ones = Array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+  private[zillion] case object Cardinal extends NameMode {
+    val ones = Vector("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
 
-    val teens = Array("ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
+    val teens = Vector("ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
 
-    val tens = Array("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety")
+    val tens = Vector("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety")
 
     def suffix(s: String): String = s
   }
 
-  private[zillion] case object Ordinal extends Mode {
-    val ones = Array("zeroth", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth")
+  private[zillion] case object Ordinal extends NameMode {
+    val ones = Vector("zeroth", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth")
 
-    val teens = Array("tenth", "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth", "nineteenth")
+    val teens = Vector("tenth", "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth", "nineteenth")
 
-    val tens = Array("", "", "twentieth", "thirtieth", "fortieth", "fiftieth", "sixtieth", "seventieth", "eightieth", "ninetieth")
+    val tens = Vector("", "", "twentieth", "thirtieth", "fortieth", "fiftieth", "sixtieth", "seventieth", "eightieth", "ninetieth")
     def suffix(s: String): String = s + "th"
   }
+
+  import fraction._
+
+  /**
+   * Returns the given fraction's cardinal name.
+   * 
+   * The exact behavior can be configured via imports from
+   * zillion.options.fractions. Here's how 7/5 would be rendered:
+   * 
+   *   simple: seven over five
+   *   fifths
+   *   
+   */
+  def cardinal(r: Rational, propriety: Propriety = Improper, format: Format = Heuristic): String =
+    if (r < 0) "negative " + cardinal(-r, propriety, format)
+    else if (r.isWhole) cardinal(r.numerator)
+    else {
+      val n = r.numerator
+      val d = r.denominator
+      (propriety, format) match {
+        case (Mixed, _) if n > d =>
+          cardinal(n / d) + " and " + cardinal(Rational(n % d, d), propriety, format)
+        case (_, Traditional) =>
+          if (n == 1) "one " + denominator(d)
+          else if (d == 2) cardinal(n) + " halves"
+          else {
+            val s = denominator(d)
+            val s2 = if (s.startsWith("one ")) s.substring(4) else s
+            s"${cardinal(n)} ${s2}s"
+          }
+        case (_, Simple) =>
+          s"${cardinal(n)} over ${cardinal(d)}"
+        case (_, Heuristic) =>
+          if (d < 1000 || isPowerOfTen(d)) cardinal(r, propriety, Traditional)
+          else cardinal(r, propriety, Simple)
+      }
+    }
+
+  def isPowerOfTen(x: BigInt): Boolean = {
+    val (q, r) = x /% 10
+    if (r != 0) false
+    else if (q == 1) true
+    else isPowerOfTen(q)
+  }
+
+  def denominator(n: BigInt): String =
+    if (n < 0) denominator(-n)
+    else if (n == 0) throw new IllegalArgumentException("/0")
+    else if (n == 1) ""
+    else if (n == 2) "half"
+    else ordinal(n)
+
 }

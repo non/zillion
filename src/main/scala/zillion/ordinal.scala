@@ -1,8 +1,8 @@
 package zillion
 
-import zillion.Util.{Ordinal, render}
+import zillion.Util.{Cardinal, Ordinal, render}
 
-package object ordinal {
+object ordinal {
 
   /**
    * Returns the given number's ordinal name.
@@ -11,5 +11,15 @@ package object ordinal {
    * cardinal(3) would be "third" and cardinal(27) would be
    * "twenty-seventh".
    */
-  def integer(n: BigInt): String = render(n, Ordinal)
+  def apply(n: Long): String =
+    render(BigInt(n), Cardinal)
+
+  /**
+   * Returns the given number's ordinal name.
+   * 
+   * An ordinal number describes position or rank. For example,
+   * cardinal(3) would be "third" and cardinal(27) would be
+   * "twenty-seventh".
+   */
+  def apply(n: BigInt): String = render(n, Ordinal)
 }

@@ -64,7 +64,9 @@ private[zillion] object Util {
       throw new IllegalArgumentException(s"number is >= 10^3003")
     }
 
-  val thousands = Vector("", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion")
+  val thousands = Vector("", "thousand", "million", "billion",
+    "trillion", "quadrillion", "quintillion", "sextillion",
+    "septillion", "octillion", "nonillion")
 
   /**
    * This method is used to create the large units between 10^33
@@ -126,7 +128,7 @@ private[zillion] object Util {
       case 9 => "nongenti"
     }
 
-  import scala.math.{ceil, floor, log}
+  import spire.math.{ceil, floor, log}
 
   /**
    * Return the floor of log10(n).
@@ -166,21 +168,29 @@ private[zillion] object Util {
   }
 
   case object Cardinal extends NameMode {
-    val ones = Vector("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+    val ones = Vector("zero", "one", "two", "three", "four",
+      "five", "six", "seven", "eight", "nine")
 
-    val teens = Vector("ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
+    val teens = Vector("ten", "eleven", "twelve", "thirteen", "fourteen",
+      "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
 
-    val tens = Vector("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety")
+    val tens = Vector("", "", "twenty", "thirty", "forty",
+      "fifty", "sixty", "seventy", "eighty", "ninety")
 
     def suffix(s: String): String = s
   }
 
   case object Ordinal extends NameMode {
-    val ones = Vector("zeroth", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth")
+    val ones = Vector("zeroth", "first", "second", "third", "fourth",
+      "fifth", "sixth", "seventh", "eighth", "ninth")
 
-    val teens = Vector("tenth", "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth", "nineteenth")
+    val teens = Vector("tenth", "eleventh", "twelfth", "thirteenth",
+      "fourteenth", "fifteenth", "sixteenth", "seventeenth",
+      "eighteenth", "nineteenth")
 
-    val tens = Vector("", "", "twentieth", "thirtieth", "fortieth", "fiftieth", "sixtieth", "seventieth", "eightieth", "ninetieth")
+    val tens = Vector("", "", "twentieth", "thirtieth", "fortieth",
+      "fiftieth", "sixtieth", "seventieth", "eightieth", "ninetieth")
+
     def suffix(s: String): String = s + "th"
   }
 
@@ -198,5 +208,5 @@ private[zillion] object Util {
     else if (n == 0) throw new IllegalArgumentException("/0")
     else if (n == 1) ""
     else if (n == 2) "half"
-    else zillion.ordinal.integer(n)
+    else ordinal(n)
 }

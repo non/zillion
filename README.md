@@ -46,15 +46,15 @@ K. Guy by way of Wikipedia.
 
 This library has not yet been extensively tested or reviewed. I'm not
 sure what the best strategy is for unit-testing the very large number
-names. (Of course, there are not any tests at all yet, so clearly
-there is obvious room to improve.)
+names, other than spot checks and regression tests.
 
 ### Future Work
 
-Right now the `cardinal` and `ordinal` methods take a `BigInt`
-argument (but implicit conversions mean that you can call this method
-with `Int` or `Long` too). It might be worth trying to support other
-number types directly.
+It would be great to support numbers larger than 10^3003.
+
+Right now the the underlying rendering uses `BigInt` . It might be
+worth trying to support `Long` directly (to avoid creating unnecessary
+`BigInt` instances)e.
 
 It could also be nice to allow pluggable capitalization and grammar
 rules. Currently all names are lowercase, and no conjunctions are
@@ -68,7 +68,7 @@ languages.
 ### Copyright and License
 
 All code is available to you under the MIT license, available at
-http://opensource.org/licenses/mit-license.php and also in the COPYING
-file.
+http://opensource.org/licenses/mit-license.php and also in the
+[COPYING](COPYING) file.
 
 Copyright Erik Osheim, 2014.

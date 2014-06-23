@@ -28,6 +28,16 @@ cardinal(BigInt(10).pow(300) * 999)
 // "nine hundred ninety-nine novenonagintallion"
 ```
 
+Zillion can also produce cardinal names for fractions and decimal
+numbers:
+
+```scala
+import spire.math.Rational
+
+cardinal(Rational(14, 27))      // fourteen twenty-sevenths
+cardinal(BigDecimal("1247.23")) // one thousand two hundred forty-seven and twenty-three hundredths
+```
+
 ### Details
 
 The [strategy](http://en.wikipedia.org/wiki/Names_of_large_numbers#Proposals_for_new_naming_system)

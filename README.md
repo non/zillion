@@ -48,7 +48,7 @@ Zillion supports Scala 2.10.x and 2.11.x. If you use SBT, you can
 include Zillion via the following `build.sbt` snippets:
 
 ```
-resolvers += "bintray/meetup" at "http://dl.bintray.com/meetup/maven"
+resolvers += "bintray/non" at "http://dl.bintray.com/non/maven"
 
 libraryDependencies += "org.spire-math" %% "zillion" % "0.1.0"
 ```

@@ -39,6 +39,20 @@ cardinal.fraction(10, 25)       // ten twenty-fifths
 cardinal(BigDecimal("1247.23")) // one thousand two hundred forty-seven and twenty-three hundredths
 ```
 
+### Getting Zillion
+
+Zillion is published to [bintray](https://bintray.com/) using the
+[bintray-sbt](https://github.com/softprops/bintray-sbt) plugin.
+
+Zillion supports Scala 2.10.x and 2.11.x. If you use SBT, you can
+include Zillion via the following `build.sbt` snippets:
+
+```
+resolvers += "bintray/meetup" at "http://dl.bintray.com/meetup/maven"
+
+libraryDependencies += "org.spire-math" %% "zillion" % "0.1.0"
+```
+
 ### Details
 
 The [strategy](http://en.wikipedia.org/wiki/Names_of_large_numbers#Proposals_for_new_naming_system)

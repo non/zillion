@@ -35,6 +35,7 @@ numbers:
 import spire.math.Rational
 
 cardinal(Rational(14, 27))      // fourteen twenty-sevenths
+cardinal.fraction(10, 25)       // ten twenty-fifths
 cardinal(BigDecimal("1247.23")) // one thousand two hundred forty-seven and twenty-three hundredths
 ```
 

@@ -23,3 +23,7 @@ scalacOptions ++= Seq(
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 homepage := Some(url("http://github.com/non/zillion"))
+
+seq(bintrayResolverSettings: _*)
+
+seq(bintrayPublishSettings: _*)

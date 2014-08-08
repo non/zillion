@@ -6,7 +6,7 @@ version := "0.1.0"
 
 scalaVersion := "2.10.4"
 
-crossScalaVersions := Seq("2.10.4", "2.11.1")
+crossScalaVersions := Seq("2.10.4", "2.11.2")
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "spire" % "0.7.4",

@@ -55,7 +55,7 @@ object cardinal {
    * zillion.options.fractions. Here's how 21, 15 would be rendered:
    * 
    *   simple: twenty-one over fifteen
-   *   traditional: twenty-one fifteenth
+   *   traditional: twenty-one fifteenths
    */
   def fraction(n: BigInt, d: BigInt, propriety: Propriety = Improper, format: Format = Heuristic): String =
     if (n < 0) "negative " + fraction(-n, d, propriety, format)

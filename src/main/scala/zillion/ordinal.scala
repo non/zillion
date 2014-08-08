@@ -12,7 +12,7 @@ object ordinal {
    * "twenty-seventh".
    */
   def apply(n: Long): String =
-    render(BigInt(n), Cardinal)
+    render(BigInt(n), Ordinal)
 
   /**
    * Returns the given number's ordinal name.

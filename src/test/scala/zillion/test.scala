@@ -38,4 +38,8 @@ trait GenericTest extends PropSpec with Matchers with GeneratorDrivenPropertyChe
   property("last three digits") {
     forAll { (n: BigInt) => checkModK(n, 1000) }
   }
+
+  property("Int and BigInt match") {
+    forAll { (n: Int) => render(n) shouldBe render(BigInt(n)) }
+  }
 }

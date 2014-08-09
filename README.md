@@ -50,7 +50,7 @@ include Zillion via the following `build.sbt` snippets:
 ```
 resolvers += "bintray/non" at "http://dl.bintray.com/non/maven"
 
-libraryDependencies += "org.spire-math" %% "zillion" % "0.1.0"
+libraryDependencies += "org.spire-math" %% "zillion" % "0.1.2"
 ```
 
 ### Details
@@ -69,7 +69,7 @@ It would be great to support numbers larger than 10^3003.
 
 Right now the the underlying rendering uses `BigInt` . It might be
 worth trying to support `Long` directly (to avoid creating unnecessary
-`BigInt` instances)e.
+`BigInt` instances).
 
 It could also be nice to allow pluggable capitalization and grammar
 rules. Currently all names are lowercase, and no conjunctions are
@@ -77,8 +77,7 @@ used.
 
 Zillion only supports English. I'm not sure how useful this code would
 be to rendering number names in other languages. But I'd love to hear
-from folks who would be interested in trying to support other
-languages.
+from folks who would be interested in trying to support them.
 
 ### Copyright and License
 

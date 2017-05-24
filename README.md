@@ -9,6 +9,7 @@ Zillion can currently produce cardinal or ordinal names for all
 numbers above -10^3003 and below 10^3003.
 
 ```scala
+import spire.math.SafeLong
 import zillion.{cardinal, ordinal}
 
 cardinal(3)     // "three"
@@ -21,10 +22,10 @@ ordinal(20)     // "twentieth"
 ordinal(117)    // "one hundred seventeenth"
 ordinal(9999)   // "nine thousand nine hundred ninety-ninth"
 
-cardinal(BigInt(10).pow(123) + BigInt(10).pow(37) + BigInt(1234))
+cardinal(SafeLong(10).pow(123) + SafeLong(10).pow(37) + SafeLong(1234))
 // "one quadragintallion ten undecillion one thousand two hundred thirty-four"
 
-cardinal(BigInt(10).pow(300) * 999)
+cardinal(SafeLong(10).pow(300) * 999)
 // "nine hundred ninety-nine novenonagintallion"
 ```
 
@@ -41,16 +42,18 @@ cardinal(BigDecimal("1247.23")) // one thousand two hundred forty-seven and twen
 
 ### Getting Zillion
 
-Zillion is published to [bintray](https://bintray.com/) using the
-[bintray-sbt](https://github.com/softprops/bintray-sbt) plugin.
-
-Zillion supports Scala 2.10.x and 2.11.x. If you use SBT, you can
-include Zillion via the following `build.sbt` snippets:
+Zillion supports Scala 2.10, 2.11, and 2.12. If you use SBT, you can
+include Zillion via the following `build.sbt` snippet:
 
 ```
-resolvers += "bintray/non" at "http://dl.bintray.com/non/maven"
+libraryDependencies += "org.spire-math" %% "zillion" % "0.2.0"
+```
 
-libraryDependencies += "org.spire-math" %% "zillion" % "0.1.2"
+Zillion also supports Scala.js. To use Zillion with Scala.js, use
+the following `build.sbt` snippet:
+
+```
+libraryDependencies += "org.spire-math" %%% "zillion" % "0.2.0"
 ```
 
 ### Details
@@ -67,9 +70,9 @@ names, other than spot checks and regression tests.
 
 It would be great to support numbers larger than 10^3003.
 
-Right now the the underlying rendering uses `BigInt` . It might be
+Right now the the underlying rendering uses `SafeLong`. It might be
 worth trying to support `Long` directly (to avoid creating unnecessary
-`BigInt` instances).
+`SafeLong` instances).
 
 It could also be nice to allow pluggable capitalization and grammar
 rules. Currently all names are lowercase, and no conjunctions are
@@ -85,4 +88,4 @@ All code is available to you under the MIT license, available at
 http://opensource.org/licenses/mit-license.php and also in the
 [COPYING](COPYING) file.
 
-Copyright Erik Osheim, 2014.
+Copyright Erik Osheim, 2014-2017.

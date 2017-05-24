@@ -1,29 +1,29 @@
 package zillion
 
-import spire.math.Rational
+import spire.math.{Rational, SafeLong}
 
 private[zillion] object Util {
 
   // Below this value we use "short scale" thousands
-  val SmallCutoff = BigInt(10).pow(33)
+  val SmallCutoff = SafeLong(10).pow(33)
 
   // This is the smallest value that we can't name.
-  val LargeCutoff = BigInt(10).pow(3003)
+  val LargeCutoff = SafeLong(10).pow(3003)
 
   /**
    * Render the given number as a cardinal/ordinal string.
-   * 
+   *
    * The mode parameter determines which type of name we are
    * creating. This method is recursive. Note that even ordinal mode
    * still requires cardinal renderings in some cases (i.e. the "four"
    * in "four hundred third").
-   * 
+   *
    * The naming scheme for large values was introduced by John Horton
    * Conway and Richard K. Guy [1].
-   * 
+   *
    * [1] http://en.wikipedia.org/wiki/Names_of_large_numbers#Proposals_for_new_naming_system
    */
-  def render(n: BigInt, mode: NameMode): String =
+  def render(n: SafeLong, mode: NameMode): String =
     if (n < 0) {
       "negative " + render(-n, mode)
     } else if (n < 10) {
@@ -44,7 +44,7 @@ private[zillion] object Util {
       if (r == 0) mode.suffix(s"$m thousand") else s"$m thousand ${render(r, mode)}"
     } else if (n < SmallCutoff) {
       val x = log10Mult3(n)
-      val p = BigInt(10).pow(x)
+      val p = SafeLong(10).pow(x)
       val b = render(n / p, Cardinal)
       val r = n % p
       val t = thousands(x / 3)
@@ -52,7 +52,7 @@ private[zillion] object Util {
     } else if (n < LargeCutoff) {
       val x = log10Mult3(n)
       val xm3 = x - 3
-      val p = BigInt(10).pow(x)
+      val p = SafeLong(10).pow(x)
       val b = render(n / p, Cardinal)
       val r = n % p
       val lh = largeHundreds(xm3 / 300)
@@ -135,27 +135,27 @@ private[zillion] object Util {
    * 
    * We assume n is non-negative.
    */
-  def log10(n: BigInt): Int = {
+  def log10(n: SafeLong): Int = {
     // get a lower bound approximation for log10(n)
     var x = floor((n.bitLength - 1) * log(2) / log(10)).toInt
-    var q = n / BigInt(10).pow(x)
+    var q = n / SafeLong(10).pow(x)
     while (q >= 10) { x += 1; q /= 10 }
     x
   }
 
   /**
    * Return the largest multiple of 3 <= log10(n).
-   * 
+   *
    * We assume n is non-negative.
    */
-  def log10Mult3(n: BigInt): Int = {
+  def log10Mult3(n: SafeLong): Int = {
     val m = log10(n)
     m - (m % 3)
   }
 
   /**
    * Naming mode, used to abstract across cardinal/ordinal.
-   * 
+   *
    * This mode has some arrays for dealing with the smallest numbers
    * (whose cardinal => ordinal mappings are non-standard). It also
    * has a suffix() method which deals with all "larger" mappings.
@@ -196,14 +196,14 @@ private[zillion] object Util {
 
   import fraction._
 
-  def isPowerOfTen(x: BigInt): Boolean = {
+  def isPowerOfTen(x: SafeLong): Boolean = {
     val (q, r) = x /% 10
     if (r != 0) false
     else if (q == 1) true
     else isPowerOfTen(q)
   }
 
-  def denominator(n: BigInt): String =
+  def denominator(n: SafeLong): String =
     if (n < 0) denominator(-n)
     else if (n == 0) throw new IllegalArgumentException("/0")
     else if (n == 1) ""

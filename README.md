@@ -46,14 +46,14 @@ Zillion supports Scala 2.10, 2.11, and 2.12. If you use SBT, you can
 include Zillion via the following `build.sbt` snippet:
 
 ```
-libraryDependencies += "org.spire-math" %% "zillion" % "0.2.0"
+libraryDependencies += "org.spire-math" %% "zillion" % "0.3.0"
 ```
 
 Zillion also supports Scala.js. To use Zillion with Scala.js, use
 the following `build.sbt` snippet:
 
 ```
-libraryDependencies += "org.spire-math" %%% "zillion" % "0.2.0"
+libraryDependencies += "org.spire-math" %%% "zillion" % "0.3.0"
 ```
 
 ### Details
@@ -88,4 +88,4 @@ All code is available to you under the MIT license, available at
 http://opensource.org/licenses/mit-license.php and also in the
 [COPYING](COPYING) file.
 
-Copyright Erik Osheim, 2014-2017.
+Copyright Erik Osheim, 2014-2018.

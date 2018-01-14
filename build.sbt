@@ -1,5 +1,3 @@
-// previous version was "0.1.4"
-
 import ReleaseTransformations._
 
 lazy val zillionSettings = Seq(
@@ -7,7 +5,7 @@ lazy val zillionSettings = Seq(
   licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
   homepage := Some(url("http://github.com/non/zillion")),
   scalaVersion := "2.12.2",
-  crossScalaVersions := Seq("2.10.6", "2.11.11", "2.12.2"),
+  crossScalaVersions := Seq("2.10.6", "2.11.12", "2.12.4"),
   scalacOptions ++= Seq(
     "-feature",
     "-deprecation",
@@ -17,19 +15,13 @@ lazy val zillionSettings = Seq(
     "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
     "org.scalacheck" %%% "scalacheck" % "1.13.5" % "test"
   ),
-  scalaJSStage in Global := FastOptStage,
+  //scalaJSStage in Global := FastOptStage, //FIXME
   releaseCrossBuild := true,
   releasePublishArtifactsAction := PgpKeys.publishSigned.value,
   publishMavenStyle := true,
   publishArtifact in Test := false,
   pomIncludeRepository := Function.const(false),
-  publishTo := {
-    val nexus = "https://oss.sonatype.org/"
-    if (isSnapshot.value)
-      Some("Snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("Releases" at nexus + "service/local/staging/deploy/maven2")
-  },
+  publishTo := Some(if (isSnapshot.value) Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging),
   pomExtra := (
     <scm>
       <url>git@github.com:non/zillion.git</url>
@@ -55,7 +47,7 @@ lazy val zillionSettings = Seq(
     publishArtifacts,
     setNextVersion,
     commitNextVersion,
-    ReleaseStep(action = Command.process("sonatypeReleaseAll", _)),
+    releaseStepCommand("sonatypeReleaseAll"),
     pushChanges))
 
 lazy val noPublish = Seq(
